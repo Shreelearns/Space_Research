@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellites - SpaceLink Research</title>
+    <style>
+        /* CSS Variables for Consistent Design */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --gradient-space: linear-gradient(135deg, #0a0e17 0%, #1b4965 100%);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo-icon {
+            margin-right: 0px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .satellites-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-space);
+            margin-top: 80px;
+        }
+
+        .satellites-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://cdn.pixabay.com/photo/2016/11/18/22/58/stars-1837306_640.jpg') no-repeat center center/cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        /* Satellites Content */
+        .satellites-content {
+            padding: 80px 0;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: var(--primary-blue);
+            color: var(--accent-teal);
+            border: 2px solid var(--accent-teal);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        .filter-btn:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* Satellites Grid */
+        .satellites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .satellite-card {
+            background: var(--primary-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .satellite-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 10px 40px rgba(98, 182, 203, 0.3);
+        }
+
+        .satellite-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .satellite-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .satellite-card:hover .satellite-image img {
+            transform: scale(1.05);
+        }
+
+        .satellite-content {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .satellite-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: var(--accent-teal);
+        }
+
+        .satellite-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            width: fit-content;
+        }
+
+        .type-observation {
+            background: rgba(98, 182, 203, 0.2);
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+        }
+
+        .type-communication {
+            background: rgba(202, 233, 255, 0.2);
+            color: var(--accent-light);
+            border: 1px solid var(--accent-light);
+        }
+
+        .type-scientific {
+            background: rgba(27, 73, 101, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+        }
+
+        .satellite-description {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .satellite-specs {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(98, 182, 203, 0.2);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            flex-wrap: wrap;
+        }
+
+        .spec-item {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 5px;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-teal);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-gray);
+        }
+
+        /* Features Section */
+        .features-section {
+            background: var(--primary-blue);
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 80px;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            padding: 25px;
+            background: rgba(98, 182, 203, 0.1);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateX(10px);
+            background: rgba(98, 182, 203, 0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--accent-teal);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+
+            .satellites-hero {
+                height: 50vh;
+                margin-top: 70px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .satellites-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+            }
+
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <p>SpaceLink</p>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html" class="active">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Satellites Hero Section -->
+    <section class="satellites-hero">
+        <div class="satellites-hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Our Satellite Fleet</h1>
+                <p>Advanced satellites delivering Earth observation, communication, and scientific data to support humanity's needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="satellites-content">
+        <div class="container">
+            <!-- Satellite Statistics -->
+            <section class="section">
+                <h2 class="section-title">Satellite Fleet Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Active Satellites</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Observation Satellites</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">52</div>
+                        <div class="stat-label">Communication Satellites</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">30</div>
+                        <div class="stat-label">Scientific Satellites</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="section">
+                <h2 class="section-title">Filter Satellites</h2>
+                <div class="filter-section">
+                    <button class="filter-btn active" onclick="filterSatellites('all')">All Satellites</button>
+                    <button class="filter-btn" onclick="filterSatellites('observation')">Earth Observation</button>
+                    <button class="filter-btn" onclick="filterSatellites('communication')">Communication</button>
+                    <button class="filter-btn" onclick="filterSatellites('scientific')">Scientific</button>
+                </div>
+            </section>
+
+            <!-- Satellites Grid -->
+            <section class="section">
+                <div class="satellites-grid" id="satellitesGrid">
+                    <!-- Earth Observation Satellites -->
+                    <div class="satellite-card" data-type="observation">
+                        <div class="satellite-image">🛰️</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">Horizon-1</h3>
+                            <span class="satellite-type type-observation">Earth Observation</span>
+                            <p class="satellite-description">Advanced Earth observation satellite providing high-resolution imagery for climate monitoring, agriculture, and disaster management.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2012</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>800 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="observation">
+                        <div class="satellite-image">🛰️</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">EarthWatch-2</h3>
+                            <span class="satellite-type type-observation">Earth Observation</span>
+                            <p class="satellite-description">Multi-spectral satellite capturing data across visible, infrared, and thermal bands for comprehensive environmental analysis.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2015</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>705 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="observation">
+                        <div class="satellite-image">🛰️</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">ScannerPro-3</h3>
+                            <span class="satellite-type type-observation">Earth Observation</span>
+                            <p class="satellite-description">Ultra-high resolution imaging satellite for detailed mapping, urban planning, and natural resource management applications.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2018</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>650 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Communication Satellites -->
+                    <div class="satellite-card" data-type="communication">
+                        <div class="satellite-image">📡</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">ComSat-Alpha</h3>
+                            <span class="satellite-type type-communication">Communication</span>
+                            <p class="satellite-description">Global communication satellite providing broadband connectivity and telecommunications relay for remote and underserved regions.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2016</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Orbit</div>
+                                    <div>Geostationary</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="communication">
+                        <div class="satellite-image">📡</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">LinkNet-Beta</h3>
+                            <span class="satellite-type type-communication">Communication</span>
+                            <p class="satellite-description">Next-generation communication satellite with advanced digital processing for high-speed data transmission and internet services.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2019</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Orbit</div>
+                                    <div>Geostationary</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="communication">
+                        <div class="satellite-image">📡</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">GlobalConnect-X</h3>
+                            <span class="satellite-type type-communication">Communication</span>
+                            <p class="satellite-description">Advanced relay satellite supporting emergency communications, disaster response, and international collaboration networks.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2020</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Orbit</div>
+                                    <div>Geostationary</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scientific Satellites -->
+                    <div class="satellite-card" data-type="scientific">
+                        <div class="satellite-image">🔬</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">CosmicEye-1</h3>
+                            <span class="satellite-type type-scientific">Scientific</span>
+                            <p class="satellite-description">Space telescope for observing distant galaxies, analyzing cosmic background radiation, and studying stellar phenomena.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2017</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>600 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="scientific">
+                        <div class="satellite-image">🔬</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">AtmoStudy-2</h3>
+                            <span class="satellite-type type-scientific">Scientific</span>
+                            <p class="satellite-description">Atmospheric science satellite measuring greenhouse gases, ozone levels, and climate parameters for environmental research.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2019</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>400 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="satellite-card" data-type="scientific">
+                        <div class="satellite-image">🔬</div>
+                        <div class="satellite-content">
+                            <h3 class="satellite-title">MagneticMonitor</h3>
+                            <span class="satellite-type type-scientific">Scientific</span>
+                            <p class="satellite-description">Dedicated satellite for monitoring Earth's magnetic field, tracking space weather events, and studying ionospheric phenomena.</p>
+                            <div class="satellite-specs">
+                                <div class="spec-item">
+                                    <div class="spec-label">Launch</div>
+                                    <div>2021</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Altitude</div>
+                                    <div>500 km</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-label">Status</div>
+                                    <div>Active</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Satellite Features -->
+            <section class="section">
+                <h2 class="section-title">Advanced Satellite Features</h2>
+                <div class="features-section">
+                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 30px;">Our satellite fleet is equipped with cutting-edge technology and innovative systems for maximum efficiency and reliability.</p>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h3>High-Resolution Imaging</h3>
+                            <p>Ultra-precise cameras capturing detailed imagery for accurate data collection and comprehensive environmental monitoring.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Solar Power Systems</h3>
+                            <p>Efficient solar panels and battery systems ensuring continuous power supply for long-term satellite operations.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Real-Time Transmission</h3>
+                            <p>High-speed data transmission capabilities delivering satellite data to ground stations in real-time for immediate analysis.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Autonomous Operation</h3>
+                            <p>AI-powered systems enabling satellites to operate independently with self-correction and optimization capabilities.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Radiation Shielding</h3>
+                            <p>Advanced protective measures safeguarding sensitive electronics from cosmic radiation and solar radiation exposure.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Self-Repair Systems</h3>
+                            <p>Innovative technology allowing satellites to detect and repair minor malfunctions extending operational lifespan.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="section" style="text-align: center;">
+                <h2 class="section-title">Join Our Satellite Team</h2>
+                <p style="max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem;">Help us design, build, and operate the next generation of satellites. We're seeking engineers and scientists passionate about space technology.</p>
+                <a href="careers.html" class="btn">Explore Satellite Division Careers</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="astronomy.html">Planetary Science</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="media.html">Media Gallery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Filter functionality
+        function filterSatellites(type) {
+            const cards = document.querySelectorAll('.satellite-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (type === 'all') {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = card.getAttribute('data-type') === type ? 'flex' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

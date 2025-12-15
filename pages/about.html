@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - SpaceLink Research</title>
+    <style>
+        /* CSS Variables for Consistent Design */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --gradient-space: linear-gradient(135deg, #0a0e17 0%, #1b4965 100%);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo-icon {
+            margin-right: 0px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-space);
+            margin-top: 80px;
+        }
+
+        .about-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://cdn.pixabay.com/photo/2019/11/07/17/07/universe-4609408_1280.jpg') no-repeat center center/cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        /* About Content */
+        .about-content {
+            padding: 80px 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .about-image {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-teal);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 80px auto 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--accent-blue);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 25px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            border-color: var(--accent-teal);
+            transform: translateY(-5px);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--accent-teal);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            font-size: 1rem;
+            color: var(--text-gray);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+            border: 4px solid var(--primary-dark);
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -30px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -30px;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-card {
+            background: var(--primary-blue);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-teal);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .team-content {
+            padding: 20px;
+        }
+
+        .team-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--accent-teal);
+        }
+
+        .team-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            padding: 30px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .value-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+        }
+
+        .value-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 30px;
+            }
+
+            .about-hero {
+                height: 50vh;
+                margin-top: 70px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline::after {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 80px;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 10px;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 10px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+            }
+
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <p>SpaceLink</p>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>About SpaceLink Research</h1>
+                <p>Discover our mission, vision, and the passionate team driving humanity's future in space exploration.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="about-content">
+        <div class="container">
+            <!-- Our Story Section -->
+            <section class="section">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Our Origin Story</h2>
+                        <p>Founded in 2008 by a group of visionary scientists and engineers, SpaceLink Research emerged from a shared belief that humanity's future lies among the stars. What began as a small research initiative has grown into a globally recognized space research organization.</p>
+                        <p>Our founders asked a simple but profound question: "Why limit our exploration to Earth when the universe offers infinite possibilities?" This question became the driving force behind our organization's creation and continues to inspire our work today.</p>
+                        <p>From our humble beginnings in a converted warehouse with just 12 employees, we've expanded to multiple research facilities across three continents, employing over 2,000 dedicated professionals who share our passion for space exploration.</p>
+                    </div>
+                    <div class="about-image">
+                        <div class="placeholder-image">SpaceLink Research Headquarters</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision Section -->
+            <section class="section">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <div class="placeholder-image">Our Vision in Action</div>
+                    </div>
+                    <div class="about-text">
+                        <h2>Mission & Vision</h2>
+                        <p><strong>Our Mission:</strong> To advance human knowledge and capability in space through innovative research, cutting-edge technology, and international collaboration, making space accessible and beneficial for all humanity.</p>
+                        <p><strong>Our Vision:</strong> A future where humanity thrives as a multi-planetary species, where space exploration drives technological advancement and inspires new generations to reach for the stars.</p>
+                        <p>We believe that by pushing the boundaries of what's possible in space, we can address critical challenges on Earth, from climate monitoring to resource management, while expanding human presence throughout the solar system.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Core Values Section -->
+            <section class="section">
+                <h2 class="section-title">Our Core Values</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h3>🔬 Innovation</h3>
+                        <p>We constantly push the boundaries of what's possible, embracing new technologies and methodologies to solve the challenges of space exploration.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>🤝 Collaboration</h3>
+                        <p>We believe in the power of teamwork and partnerships with scientists, organizations, and nations around the world to achieve shared goals.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>🌍 Sustainability</h3>
+                        <p>Our space research directly benefits life on Earth through climate monitoring, resource management, and technological innovations that improve quality of life.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="section">
+                <h2 class="section-title">By The Numbers</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">Successful Missions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Countries Partnered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">127</div>
+                        <div class="stat-label">Satellites Launched</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2,350+</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline Section -->
+            <section class="section">
+                <h2 class="section-title">Our Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2008</div>
+                            <h3>Foundation</h3>
+                            <p>SpaceLink Research founded by Dr. Elena Rodriguez and a team of passionate space enthusiasts with a shared vision.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2012</div>
+                            <h3>First Satellite Launch</h3>
+                            <p>Successfully launched Horizon-1, our first Earth observation satellite, marking our entry into active space operations.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2016</div>
+                            <h3>Mars Orbiter Mission</h3>
+                            <p>Our spacecraft entered Mars orbit, beginning a new era of planetary exploration and data collection.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2020</div>
+                            <h3>Moon Rover Deployment</h3>
+                            <p>Successfully landed and deployed a rover on the Moon's surface, advancing our lunar exploration capabilities.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2023</div>
+                            <h3>Deep Space Network</h3>
+                            <p>Established our own deep space communication network, enhancing our ability to communicate with distant spacecraft.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">2025</div>
+                            <h3>Global Expansion</h3>
+                            <p>Opened new research facilities and expanded partnerships to over 15 countries, strengthening our international presence.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leadership Team Section -->
+            <section class="section">
+                <h2 class="section-title">Leadership Team</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-image">👩‍🚀</div>
+                        <div class="team-content">
+                            <h3>Dr. Elena Rodriguez</h3>
+                            <p>Founder & Chief Executive Officer</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">👨‍🔬</div>
+                        <div class="team-content">
+                            <h3>Prof. James Mitchell</h3>
+                            <p>Chief Technology Officer</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">👩‍💼</div>
+                        <div class="team-content">
+                            <h3>Sarah Chen</h3>
+                            <p>Chief Operations Officer</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">👨‍🔭</div>
+                        <div class="team-content">
+                            <h3>Dr. Marcus Thompson</h3>
+                            <p>Director of Research</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">👩‍🎓</div>
+                        <div class="team-content">
+                            <h3>Dr. Priya Patel</h3>
+                            <p>Education & Outreach Director</p>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-image">👨‍💻</div>
+                        <div class="team-content">
+                            <h3>David Anderson</h3>
+                            <p>Innovation Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="section" style="text-align: center;">
+                <h2 class="section-title">Join Our Mission</h2>
+                <p style="max-width: 700px; margin: 0 auto 30px; font-size: 1.1rem;">Interested in being part of humanity's journey to the stars? Explore our career opportunities and discover how you can contribute to the future of space exploration.</p>
+                <a href="careers.html" class="btn">View Career Opportunities</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="astronomy.html">Planetary Science</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="media.html">Media Gallery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

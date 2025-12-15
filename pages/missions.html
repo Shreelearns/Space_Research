@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missions - SpaceLink Research</title>
+    <style>
+        /* CSS Variables for Consistent Design */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --gradient-space: linear-gradient(135deg, #0a0e17 0%, #1b4965 100%);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            padding: 8rem 2rem 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        /* Filter buttons */
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0 3rem;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--accent-teal);
+            background: transparent;
+            color: var(--text-light);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-teal);
+            border-color: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* Missions Grid */
+        .missions-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .mission-card {
+            background: rgba(29, 58, 91, 0.6);
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-teal);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .mission-card:hover {
+            border-color: var(--accent-teal);
+            background: rgba(29, 58, 91, 0.9);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .mission-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .mission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin: 0;
+        }
+
+        .mission-status {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-ongoing {
+            background: rgba(98, 182, 203, 0.2);
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+        }
+
+        .status-upcoming {
+            background: rgba(202, 233, 255, 0.1);
+            color: var(--accent-light);
+            border: 1px solid var(--accent-light);
+        }
+
+        .status-completed {
+            background: rgba(173, 181, 189, 0.2);
+            color: var(--text-gray);
+            border: 1px solid var(--text-gray);
+        }
+
+        .mission-description {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .mission-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(98, 182, 203, 0.05);
+            border-radius: 8px;
+        }
+
+        .detail-item {
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: var(--accent-teal);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            color: var(--text-gray);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(29, 58, 91, 0.6);
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            border-top: 2px solid var(--accent-blue);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-gray);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .missions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .mission-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+
+            .filter-container {
+                padding: 0 1rem;
+            }
+
+            .missions-container {
+                padding: 1rem;
+            }
+
+            .mission-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚀</span>
+                <p>SpaceLink</p>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">AboutUs</a></li>
+                <li><a href="missions.html" class="active">Missions</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="satellites.html">Satellites</a></li>
+                <li><a href="spacecraft.html">Spacecraft</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="collaborations.html">Collaborations</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Our Missions</h1>
+        <p class="subtitle">Explore the missions driving humanity's journey beyond Earth. From lunar expeditions to deep space observations, we're pushing the boundaries of what's possible.</p>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterMissions('all')">All Missions</button>
+        <button class="filter-btn" onclick="filterMissions('ongoing')">Ongoing</button>
+        <button class="filter-btn" onclick="filterMissions('upcoming')">Upcoming</button>
+        <button class="filter-btn" onclick="filterMissions('completed')">Completed</button>
+    </div>
+
+    <!-- Missions Grid -->
+    <div class="missions-container">
+        <div class="missions-grid" id="missionsGrid">
+            <!-- Mission 1 -->
+            <div class="mission-card" data-status="ongoing">
+                <div class="mission-header">
+                    <h2 class="mission-title">Artemis Gateway</h2>
+                    <span class="mission-status status-ongoing">Ongoing</span>
+                </div>
+                <p class="mission-description">Establishing a sustainable human presence on the Moon with the Gateway station, serving as a staging point for Mars exploration.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Moon</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">24 months</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">250+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 2 -->
+            <div class="mission-card" data-status="ongoing">
+                <div class="mission-header">
+                    <h2 class="mission-title">Solar Sentinel</h2>
+                    <span class="mission-status status-ongoing">Ongoing</span>
+                </div>
+                <p class="mission-description">Advanced solar monitoring mission tracking solar activity, magnetic storms, and space weather phenomena for Earth protection.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Solar Orbit</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2023</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">10 years</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">180+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 3 -->
+            <div class="mission-card" data-status="ongoing">
+                <div class="mission-header">
+                    <h2 class="mission-title">Jupiter Explorer</h2>
+                    <span class="mission-status status-ongoing">Ongoing</span>
+                </div>
+                <p class="mission-description">Comprehensive study of Jupiter's atmosphere, magnetic field, and moons to understand gas giant formation and evolution.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Jupiter</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2022</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">7 years</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">220+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 4 -->
+            <div class="mission-card" data-status="upcoming">
+                <div class="mission-header">
+                    <h2 class="mission-title">Mars Base Alpha</h2>
+                    <span class="mission-status status-upcoming">Upcoming</span>
+                </div>
+                <p class="mission-description">Establishment of the first permanent human settlement on Mars with advanced habitat systems and resource utilization.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Mars</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2027</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">36 months</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">400+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 5 -->
+            <div class="mission-card" data-status="upcoming">
+                <div class="mission-header">
+                    <h2 class="mission-title">Exoplanet Seeker</h2>
+                    <span class="mission-status status-upcoming">Upcoming</span>
+                </div>
+                <p class="mission-description">Next-generation space telescope detecting and analyzing Earth-like exoplanets in the habitable zones of distant stars.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Deep Space</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2028</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">15 years</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">300+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 6 -->
+            <div class="mission-card" data-status="upcoming">
+                <div class="mission-header">
+                    <h2 class="mission-title">Europa Quest</h2>
+                    <span class="mission-status status-upcoming">Upcoming</span>
+                </div>
+                <p class="mission-description">Investigation of Jupiter's moon Europa for subsurface ocean life and potential habitability in its icy crust.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Europa, Jupiter</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2029</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">8 years</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">280+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 7 -->
+            <div class="mission-card" data-status="completed">
+                <div class="mission-header">
+                    <h2 class="mission-title">James Webb Observations</h2>
+                    <span class="mission-status status-completed">Completed</span>
+                </div>
+                <p class="mission-description">Revolutionary infrared observations of the earliest galaxies and star formation regions in the universe.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Deep Space</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2021</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">36 months</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">320+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 8 -->
+            <div class="mission-card" data-status="completed">
+                <div class="mission-header">
+                    <h2 class="mission-title">Mars Rover Legacy</h2>
+                    <span class="mission-status status-completed">Completed</span>
+                </div>
+                <p class="mission-description">Successful deployment of advanced rover that explored Martian geology, water history, and habitability potential.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Mars</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2020</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">48 months</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">290+ members</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission 9 -->
+            <div class="mission-card" data-status="completed">
+                <div class="mission-header">
+                    <h2 class="mission-title">Global Satellite Network</h2>
+                    <span class="mission-status status-completed">Completed</span>
+                </div>
+                <p class="mission-description">Deployment of comprehensive satellite constellation for Earth observation, communication, and climate monitoring.</p>
+                <div class="mission-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Destination</span>
+                        <span class="detail-value">Earth Orbit</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Launch Year</span>
+                        <span class="detail-value">2019</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">60 months</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Team Size</span>
+                        <span class="detail-value">350+ members</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--accent-light);">SpaceLink Research Impact</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">9+</div>
+                    <div class="stat-label">Active Missions</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2400+</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Successful Launches</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 SpaceLink Research. Pioneering the future of space exploration. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function filterMissions(status) {
+            const cards = document.querySelectorAll('.mission-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (status === 'all' || card.dataset.status === status) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

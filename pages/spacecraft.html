@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceLink Research - Spacecraft</title>
+    <style>
+        /* CSS Variables for Consistent Design */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --gradient-space: linear-gradient(135deg, #0a0e17 0%, #1b4965 100%);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo-icon {
+            margin-right: 0px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-space);
+            margin-top: 60px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://cdn.pixabay.com/photo/2020/05/27/01/37/space-5225356_1280.jpg') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Spacecraft Cards Grid */
+        .spacecraft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .spacecraft-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+            position: relative;
+        }
+
+        .spacecraft-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 50px rgba(98, 182, 203, 0.3);
+            border-color: rgba(98, 182, 203, 0.5);
+        }
+
+        .spacecraft-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(27, 73, 101, 0.5), rgba(98, 182, 203, 0.2));
+        }
+
+        .spacecraft-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .spacecraft-card:hover .spacecraft-image img {
+            transform: scale(1.1);
+        }
+
+        .spacecraft-content {
+            padding: 30px;
+        }
+
+        .spacecraft-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+        }
+
+        .spacecraft-type {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(98, 182, 203, 0.2);
+            color: var(--accent-teal);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spacecraft-description {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .spacecraft-specs {
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid rgba(98, 182, 203, 0.2);
+            border-bottom: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .spec-label {
+            color: var(--text-gray);
+        }
+
+        .spec-value {
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
+
+        /* Technical Specifications Section */
+        .tech-specs {
+            background: var(--primary-blue);
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .spec-card {
+            background: linear-gradient(135deg, rgba(98, 182, 203, 0.1), rgba(27, 73, 101, 0.2));
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+            transition: var(--transition);
+        }
+
+        .spec-card:hover {
+            background: linear-gradient(135deg, rgba(98, 182, 203, 0.2), rgba(27, 73, 101, 0.3));
+            border-color: rgba(98, 182, 203, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .spec-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .spec-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+        }
+
+        /* Mission Focus Section */
+        .mission-focus {
+            background: var(--primary-blue);
+        }
+
+        .focus-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .focus-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent-light);
+        }
+
+        .focus-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .focus-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-gray);
+            border-bottom: 1px solid rgba(98, 182, 203, 0.1);
+        }
+
+        .focus-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-teal);
+            font-size: 1.5rem;
+        }
+
+        .focus-visual {
+            background: linear-gradient(135deg, rgba(98, 182, 203, 0.1), rgba(27, 73, 101, 0.2));
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(98, 182, 203, 0.3);
+        }
+
+        .focus-visual-text {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--gradient-space);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(13, 27, 42, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(13, 27, 42, 0.8);
+            border-color: rgba(98, 182, 203, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+        }
+
+        .feature-item p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .focus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <p>SpaceLink</p>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Advanced Spacecraft Fleet</h1>
+                <p>Explore our state-of-the-art spacecraft designed for deep space exploration, planetary research, and groundbreaking scientific missions beyond Earth's orbit.</p>
+                <div class="hero-buttons">
+                    <a href="#fleet" class="btn">View Fleet</a>
+                    <a href="#specs" class="btn btn-outline">Technical Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spacecraft Fleet Section -->
+    <section class="section" id="fleet">
+        <div class="container">
+            <h2 class="section-title">Our Spacecraft Fleet</h2>
+            <div class="spacecraft-grid">
+                <!-- Spacecraft 1 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Voyager Deep Space</h3>
+                        <span class="spacecraft-type">Deep Space Probe</span>
+                        <p class="spacecraft-description">Advanced deep space probe designed for long-duration missions to study distant planets and interstellar phenomena.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Mass:</span>
+                                <span class="spec-value">2,800 kg</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Operational Range:</span>
+                                <span class="spec-value">20+ AU</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Power System:</span>
+                                <span class="spec-value">RTG Nuclear</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacecraft 2 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Artemis Lunar Module</h3>
+                        <span class="spacecraft-type">Crewed Lander</span>
+                        <p class="spacecraft-description">Next-generation crewed lunar lander with enhanced payload capacity and surface mobility systems for sustained Moon exploration.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Crew Capacity:</span>
+                                <span class="spec-value">4 Astronauts</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Surface Duration:</span>
+                                <span class="spec-value">14 Days</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Landing Precision:</span>
+                                <span class="spec-value">±100 m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacecraft 3 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Genesis Mars Orbiter</h3>
+                        <span class="spacecraft-type">Planetary Orbiter</span>
+                        <p class="spacecraft-description">High-resolution mapping and atmospheric analysis spacecraft in stable Mars orbit for continuous planetary surveillance and research.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Orbit Altitude:</span>
+                                <span class="spec-value">400 km</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Instruments:</span>
+                                <span class="spec-value">12 Scientific</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Data Resolution:</span>
+                                <span class="spec-value">25 cm/pixel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacecraft 4 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Horizon X-5</h3>
+                        <span class="spacecraft-type">Space Station Module</span>
+                        <p class="spacecraft-description">Advanced modular station component providing research facilities and support infrastructure for long-term orbital operations.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Habitable Volume:</span>
+                                <span class="spec-value">1,200 m³</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Crew Quarters:</span>
+                                <span class="spec-value">8 Personnel</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Lifespan:</span>
+                                <span class="spec-value">20+ Years</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacecraft 5 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Aurora Solar Sail</h3>
+                        <span class="spacecraft-type">Solar Propulsion Probe</span>
+                        <p class="spacecraft-description">Cutting-edge solar sail spacecraft utilizing photonic pressure for efficient propulsion across vast interplanetary distances.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Sail Area:</span>
+                                <span class="spec-value">1,600 m²</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Acceleration:</span>
+                                <span class="spec-value">1 mm/s²</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Max Velocity:</span>
+                                <span class="spec-value">300 km/s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacecraft 6 -->
+                <div class="spacecraft-card">
+                    <div class="spacecraft-content">
+                        <h3 class="spacecraft-name">Neptune Explorer</h3>
+                        <span class="spacecraft-type">Atmospheric Probe</span>
+                        <p class="spacecraft-description">Specialized atmospheric probe designed to study gas giant atmospheres and conduct in-situ measurements of extreme planetary conditions.</p>
+                        <div class="spacecraft-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Descent Speed:</span>
+                                <span class="spec-value">Variable</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Temperature Rating:</span>
+                                <span class="spec-value">Up to 800°C</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Pressure Rating:</span>
+                                <span class="spec-value">100+ bar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications Section -->
+    <section class="section tech-specs" id="specs">
+        <div class="container">
+            <h2 class="section-title">Spacecraft Capabilities</h2>
+            <div class="specs-grid">
+                <div class="spec-card">
+                    <div class="spec-icon">🛰️</div>
+                    <h3>Propulsion Systems</h3>
+                    <p>From conventional ion drives to innovative solar sails, our spacecraft utilize cutting-edge propulsion technology optimized for various mission profiles.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">📡</div>
+                    <h3>Communication Systems</h3>
+                    <p>Advanced multi-band communication arrays with autonomous signal processing for reliable contact across millions of kilometers.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">🔬</div>
+                    <h3>Scientific Instruments</h3>
+                    <p>State-of-the-art sensors and analytical tools for conducting groundbreaking research in planetary science and astrophysics.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">⚡</div>
+                    <h3>Power Generation</h3>
+                    <p>Reliable power systems including solar arrays, radioisotope thermoelectric generators, and fuel cells for sustained operations.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">🎯</div>
+                    <h3>Navigation & Guidance</h3>
+                    <h3>Navigation & Guidance</h3>
+                    <p>Precision autonomous navigation systems enabling accurate maneuvering and rendezvous operations in deep space.</p>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-icon">🛡️</div>
+                    <h3>Thermal Protection</h3>
+                    <p>Advanced thermal management systems protecting sensitive equipment from extreme temperature variations and radiation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Focus Section -->
+    <section class="section mission-focus">
+        <div class="container">
+            <h2 class="section-title">Current Mission Focus</h2>
+            <div class="focus-grid">
+                <div class="focus-content">
+                    <h3>Exploration Priorities</h3>
+                    <ul class="focus-list">
+                        <li>Lunar Surface Exploration & Resource Mapping</li>
+                        <li>Mars Orbital Science & Atmospheric Studies</li>
+                        <li>Jupiter Moon System Investigation (Europa, Io, Ganymede)</li>
+                        <li>Interstellar Boundary Characterization</li>
+                        <li>Exoplanet Atmosphere Analysis</li>
+                        <li>Near-Earth Object Surveillance & Analysis</li>
+                        <li>Solar Phenomena Research & Monitoring</li>
+                    </ul>
+                </div>
+                <div class="focus-visual">
+                    <div>
+                        <div class="focus-visual-text">🌍</div>
+                        <p>Expanding Human Knowledge</p>
+                        <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 10px;">Reaching beyond Earth's atmosphere to unlock the secrets of the cosmos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features">
+        <div class="container">
+            <h2 class="section-title">Why Our Spacecraft Lead</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🚀</div>
+                    <h4>Advanced Engineering</h4>
+                    <p>Built with the latest aerospace technology and rigorous quality standards for maximum reliability.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h4>Data Excellence</h4>
+                    <p>High-fidelity instruments collecting unprecedented data about our solar system and beyond.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔧</div>
+                    <h4>Modular Design</h4>
+                    <p>Flexible spacecraft architecture allowing rapid adaptation for diverse mission requirements.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌟</div>
+                    <h4>Innovation Driven</h4>
+                    <p>Continuous improvement and integration of breakthrough technologies in space exploration.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <h4>Reliability</h4>
+                    <p>Tested systems with proven track records of successful deep space missions spanning decades.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <h4>Expert Team</h4>
+                    <p>World-class engineers and scientists dedicated to pushing the boundaries of space technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="astronomy.html">Planetary Science</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="media.html">Media Gallery</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 14, 23, 0.95)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'transparent';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
