@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborations - SpaceLink Research</title>
+    <style>
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            /* max-width: 1200px; */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,14,23,0.95);
+            backdrop-filter: blur(14px);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+
+        .logo span { color: var(--accent-teal); margin-right: 8px; }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover { color: var(--accent-teal); }
+
+        .hero {
+            margin-top: 90px;
+            padding: 100px 0 80px;
+            background: linear-gradient(135deg, rgba(10,14,23,0.95), rgba(27,73,101,0.7));
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 800px;
+            font-size: 1.15rem;
+            color: var(--text-gray);
+        }
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .intro-card {
+            background: linear-gradient(145deg, rgba(27,73,101,0.9), rgba(98,182,203,0.15));
+            padding: 40px;
+            border-radius: 14px;
+            border: 1px solid rgba(98,182,203,0.35);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .intro-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-teal);
+        }
+
+        .intro-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+        }
+
+        .intro-card p {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .partner-card {
+            background: linear-gradient(145deg, rgba(13,27,42,0.95), rgba(27,73,101,0.4));
+            padding: 34px;
+            border-radius: 14px;
+            border: 1px solid rgba(98,182,203,0.3);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .partner-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-teal);
+        }
+
+        .partner-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-teal);
+        }
+
+        .partner-card p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+        }
+
+        .step {
+            background: linear-gradient(135deg, rgba(27,73,101,0.8), rgba(98,182,203,0.15));
+            padding: 35px;
+            border-radius: 10px;
+        }
+
+        .step span {
+            font-size: 2.2rem;
+            color: var(--accent-teal);
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .step h4 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        .cta {
+            background: var(--primary-blue);
+            padding: 80px 40px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .cta h2 {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        .cta a {
+            display: inline-block;
+            padding: 14px 34px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            font-weight: 600;
+            border-radius: 5px;
+        }
+
+          /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.4rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo"><span>🚀</span>SpaceLink</a>
+             <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html"  >AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Collaboration Is the Mission</h1>
+        <p>Real progress in space science happens when institutions stop guarding silos and start building together. SpaceLink collaborations are active, technical, and mission-driven. Not ceremonial partnerships. Actual work.</p>
+        <div style="margin-top:40px; display:flex; gap:20px; flex-wrap:wrap;">
+            <span style="padding:10px 18px; border:1px solid rgba(98,182,203,0.4); border-radius:30px; font-size:0.9rem;">Multi-Agency Missions</span>
+            <span style="padding:10px 18px; border:1px solid rgba(98,182,203,0.4); border-radius:30px; font-size:0.9rem;">Joint Payloads</span>
+            <span style="padding:10px 18px; border:1px solid rgba(98,182,203,0.4); border-radius:30px; font-size:0.9rem;">Shared Infrastructure</span>
+            <span style="padding:10px 18px; border:1px solid rgba(98,182,203,0.4); border-radius:30px; font-size:0.9rem;">Open Science</span>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Why We Collaborate</h2>
+        <div class="intro-grid">
+            <div class="intro-card">
+                <h3>🌐 Shared Knowledge</h3>
+                <p>Collaboration enables the exchange of data, methodologies, and expertise across disciplines, allowing breakthroughs that would be impossible in isolation.</p>
+            </div>
+            <div class="intro-card">
+                <h3>🚀 Accelerated Innovation</h3>
+                <p>By combining resources and talent, we shorten development cycles and move advanced concepts from theory to mission readiness faster.</p>
+            </div>
+            <div class="intro-card">
+                <h3>🛰️ Global Impact</h3>
+                <p>Our partnerships ensure that scientific outcomes benefit the global community, supporting sustainability, security, and scientific education.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Who We Build With</h2>
+        <div class="partner-grid">
+            <div class="partner-card">
+                <h4>National Space Agencies</h4>
+                <p>Joint missions, payload development, and data-sharing initiatives with government-led space organizations worldwide.</p>
+            </div>
+            <div class="partner-card">
+                <h4>Universities & Research Labs</h4>
+                <p>Academic collaborations focused on planetary science, astrophysics, materials research, and next-generation propulsion.</p>
+            </div>
+            <div class="partner-card">
+                <h4>Private Aerospace Companies</h4>
+                <p>Industry partnerships supporting satellite platforms, launch services, avionics, and mission operations.</p>
+            </div>
+            <div class="partner-card">
+                <h4>International Consortia</h4>
+                <p>Participation in multinational research programs addressing space sustainability, debris mitigation, and Earth observation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">How Work Actually Gets Done</h2>
+        <div class="process-steps">
+            <div class="step">
+                <span>01</span>
+                <h4>Concept Alignment</h4>
+                <p>We work with partners to align scientific goals, technical requirements, and mission objectives.</p>
+            </div>
+            <div class="step">
+                <span>02</span>
+                <h4>Joint Development</h4>
+                <p>Teams collaborate on design, testing, and validation using shared infrastructure and expertise.</p>
+            </div>
+            <div class="step">
+                <span>03</span>
+                <h4>Mission Execution</h4>
+                <p>Coordinated operations, data acquisition, and analysis ensure mission success and transparency.</p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="cta">
+            <h2>Let’s Build Something That Flies</h2>
+            <p>We partner with teams who want to design, test, launch, and publish. If your idea ends at a press release, this probably isn’t the right page.</p>
+            <a href="contact.html">Propose a Collaboration</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="gallary.html">  </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

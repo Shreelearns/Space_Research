@@ -326,19 +326,58 @@
             font-size: 1rem;
         }
 
-        /* Footer */
+          /* Footer */
         footer {
             background: var(--primary-blue);
-            border-top: 2px solid var(--accent-blue);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-gray);
-            margin-top: 4rem;
+            padding: 60px 0 30px;
         }
 
-        footer p {
-            margin: 0;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
         }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -396,19 +435,19 @@
                 <p>SpaceLink</p>
             </a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">AboutUs</a></li>
-                <li><a href="missions.html" class="active">Missions</a></li>
-                <li><a href="research.html">Research</a></li>
-                <li><a href="satellites.html">Satellites</a></li>
-                <li><a href="spacecraft.html">Spacecraft</a></li>
-                <li><a href="news.html">News</a></li>
-                <li><a href="careers.html">Careers</a></li>
-                <li><a href="education.html">Education</a></li>
-                <li><a href="collaborations.html">Collaborations</a></li>
-                <li><a href="publications.html">Publications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html"  >AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
         </nav>
     </header>
 
@@ -699,7 +738,45 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 SpaceLink Research. Pioneering the future of space exploration. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="gallary.html">  </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script>

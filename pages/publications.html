@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - SpaceLink Research</title>
+    <style>
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            /* max-width: 1100px; */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10,14,23,0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .logo span { margin-right: 8px; color: var(--accent-teal); }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--accent-teal);
+        }
+
+        .hero {
+            margin-top: 90px;
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, rgba(10,14,23,0.9), rgba(27,73,101,0.7));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .section {
+            padding: 70px 0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--accent-teal);
+        }
+
+        .pub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pub-card {
+            background: var(--primary-blue);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid rgba(98,182,203,0.2);
+            transition: var(--transition);
+        }
+
+        .pub-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-teal);
+        }
+
+        .pub-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent-teal);
+        }
+
+        .pub-meta {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+        }
+
+        .pub-card p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .pub-card a {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            font-weight: 500;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .category {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(98,182,203,0.1);
+            font-size: 0.85rem;
+            color: var(--accent-teal);
+        }
+
+       /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo"><span>🚀</span>SpaceLink</a>
+            <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html"  >AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <br><br><br>
+        <h1>Scientific Publications</h1>
+        <p>Browse peer-reviewed papers, technical reports, and open-access publications produced by SpaceLink researchers across astronomy, spacecraft engineering, and space science.</p>
+        <br><br><br>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Research Areas</h2>
+        <div class="categories">
+            <div class="category">Astronomy</div>
+            <div class="category">Satellite Systems</div>
+            <div class="category">Planetary Science</div>
+            <div class="category">Propulsion</div>
+            <div class="category">Earth Observation</div>
+        </div>
+
+        <div class="pub-grid">
+            <div class="pub-card">
+                <h3>🛰️ Advancements in Small Satellite Constellations</h3>
+                <div class="pub-meta">Journal of Space Systems · 2024</div>
+                <p>An in-depth study of scalable architectures and communication strategies for next-generation CubeSat constellations. The publication evaluates orbital coordination, fault tolerance, inter-satellite links, and cost-efficient deployment models supported by simulation data.</p>
+            </div>
+
+            <div class="pub-card">
+                <h3>🔥 Thermal Control Techniques for Deep Space Missions</h3>
+                <div class="pub-meta">Aerospace Engineering Review · 2023</div>
+                <p>This research examines passive and active thermal regulation methods for long-duration spacecraft, comparing insulation materials, radiator configurations, and thermal vacuum test results across multiple deep-space mission scenarios.</p>
+            </div>
+
+            <div class="pub-card">
+                <h3>🪐 Atmospheric Analysis of Mars Using Orbital Spectrometry</h3>
+                <div class="pub-meta">Planetary Science Letters · 2023</div>
+                <p>Orbital spectrometry data is used to analyze seasonal atmospheric variations on Mars, focusing on dust storm evolution, trace gas distribution, and long-term atmospheric escape processes.</p>
+            </div>
+
+            <div class="pub-card">
+                <h3>🤖 Machine Learning Applications in Spacecraft Navigation</h3>
+                <div class="pub-meta">International Space AI Conference · 2022</div>
+                <p>This paper demonstrates autonomous navigation improvements using onboard neural networks, enabling real-time trajectory correction, hazard avoidance, and increased mission resilience.</p>
+            </div>
+
+            <div class="pub-card">
+                <h3>🌍 High-Resolution Earth Observation from LEO Platforms</h3>
+                <div class="pub-meta">Remote Sensing Journal · 2024</div>
+                <p>An overview of imaging payload design and data processing pipelines for high-resolution Earth observation satellites, with applications in climate monitoring, disaster response, and urban analysis.</p>
+            </div>
+
+           
+        </div>
+    </div>
+</section>
+
+<footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="gallary.html">  </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

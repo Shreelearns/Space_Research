@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SpaceLink Research</title>
+    <style>
+        /* CSS Variables for Theme Colors */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            /* max-width: 1200px; */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .logo p {
+            margin: 0;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 5px 0;
+            color: var(--text-light);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-teal);
+            border-radius: 1px;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
+            background: transparent;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 2px;
+            transition: var(--transition);
+            display: block;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding-top: 80px;
+                transition: all 0.5s ease;
+                z-index: 1000;
+                margin: 0;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+                display: block;
+                width: 100%;
+            }
+        }
+
+       /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* ====================
+           CONTACT PAGE SPECIFIC STYLES
+           ==================== */
+
+        .contact-hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10,14,23,0.9) 0%, rgba(27,73,101,0.7) 100%);
+            margin-top: 80px;
+        }
+
+        .contact-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://cdn.pixabay.com/photo/2020/05/27/01/37/space-5225356_1280.jpg') no-repeat center center/cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        /* Contact Content */
+        .contact-content {
+            padding: 60px 0;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            padding: 40px;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .contact-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--accent-teal);
+        }
+
+        .contact-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .contact-item p {
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .contact-item a {
+            color: var(--accent-teal);
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            padding: 40px;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--primary-dark);
+            border: 1px solid rgba(98, 182, 203, 0.3);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 2px rgba(98, 182, 203, 0.2);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(56, 193, 114, 0.1);
+            color: #38c172;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .quick-links h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+
+        .link-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-hero {
+                height: 40vh;
+                margin-top: 70px;
+            }
+            
+            .contact-info,
+            .contact-form {
+                padding: 30px;
+            }
+            
+            .link-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .link-buttons .btn {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <p>SpaceLink</p>
+                </a>
+                
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                 <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html"  >AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Hero -->
+    <section class="contact-hero">
+        <div class="contact-hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get In Touch</h1>
+                <p>We'd love to hear from you. Reach out with questions, partnership inquiries, or just to say hello.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-wrapper">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <h3>Our Location</h3>
+                        <p>SpaceLink Research Center</p>
+                        <p>123 DDU University</p>
+                        <p>Nadiad, 387001</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <h3>Phone & Email</h3>
+                        <p><strong>General Inquiries:</strong></p>
+                        <p>Phone: +91 00000 00000</p>
+                        <p>Email: <a href="mailto:info@spacelink.org">info@spacelink.org</a></p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <h3>Office Hours</h3>
+                        <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                        <p>Saturday: 9:00 AM - 1:00 PM</p>
+                        <p>Sunday: Closed</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h2 class="form-title">Send us a Message</h2>
+                    
+                    <div class="success-message" id="successMessage">
+                        ✅ Message sent successfully! We'll get back to you soon.
+                    </div>
+                    
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Your Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Subject *</label>
+                            <select class="form-control" id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Partnership">Partnership Opportunity</option>
+                                <option value="Education">Education Program</option>
+                                <option value="Career">Career Questions</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="message">Your Message *</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" placeholder="Type your message here..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; padding: 15px;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="quick-links">
+                <h3>Looking for something specific?</h3>
+                <div class="link-buttons">
+                    <a href="careers.html" class="btn btn-outline">Career Opportunities</a>
+                    <a href="education.html" class="btn btn-outline">Education Programs</a>
+                    <a href="collaborations.html" class="btn btn-outline">Partnerships</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="gallary.html">  </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+            });
+            
+            // Close menu when clicking on a link
+            const navLinksAll = document.querySelectorAll('.nav-links a');
+            navLinksAll.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+            
+            // Here you would normally send the data to a server
+            console.log('Form submitted:', { name, email, subject, message });
+        });
+        
+        // Close menu on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

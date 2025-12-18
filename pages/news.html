@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Updates - SpaceLink Research</title>
+    <style>
+        /* CSS Variables for Theme Colors */
+        :root {
+            --primary-dark: #0a0e17;
+            --primary-blue: #0d1b2a;
+            --accent-blue: #1b4965;
+            --accent-teal: #62b6cb;
+            --accent-light: #cae9ff;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        .card {
+            background: var(--primary-blue);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(20px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+            color: var(--accent-teal);
+        }
+
+        .logo p {
+            margin: 0;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 5px 0;
+            color: var(--text-light);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-teal);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-teal);
+            border-radius: 1px;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
+            background: transparent;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 2px;
+            transition: var(--transition);
+            display: block;
+        }
+
+        /* Hamburger animation */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Overlay for mobile */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding-top: 80px;
+                transition: all 0.5s ease;
+                z-index: 1000;
+                margin: 0;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+                display: block;
+                width: 100%;
+            }
+            
+            .nav-links a.active::after {
+                display: none;
+            }
+            
+            .nav-links a.active {
+                background: rgba(98, 182, 203, 0.1);
+                border-radius: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                width: 80%;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .logo-icon {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--accent-teal);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-gray);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-teal);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+        }
+
+        /* ====================
+           NEWS PAGE SPECIFIC STYLES
+           ==================== */
+
+        .news-hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(10,14,23,0.9) 0%, rgba(27,73,101,0.7) 100%);
+            margin-top: 80px;
+        }
+
+        .news-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://cdn.pixabay.com/photo/2017/08/10/00/19/tv-2617786_1280.jpg') no-repeat center center/cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-gray);
+        }
+
+        /* News Filter */
+        .news-filter {
+            padding: 40px 0;
+            background: var(--primary-blue);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--text-light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-teal);
+            border-color: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .news-card {
+            background: var(--primary-blue);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(98, 182, 203, 0.2);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .news-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.1);
+        }
+
+        .news-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .news-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(10, 14, 23, 0.8);
+            color: var(--text-light);
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .news-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .news-tag {
+            background: rgba(98, 182, 203, 0.1);
+            color: var(--accent-teal);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Featured News */
+        .featured-news {
+            margin-bottom: 80px;
+        }
+
+        .featured-card {
+            background: var(--primary-blue);
+            border-radius: 10px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--accent-teal);
+        }
+
+        .featured-image {
+            height: 100%;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .featured-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            line-height: 1.3;
+        }
+
+        .featured-excerpt {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* Press Releases */
+        .press-section {
+            background: var(--primary-blue);
+            padding: 50px;
+            border-radius: 10px;
+            margin-bottom: 80px;
+        }
+
+        .press-list {
+            margin-top: 40px;
+        }
+
+        .press-item {
+            padding: 25px;
+            border-bottom: 1px solid rgba(98, 182, 203, 0.2);
+            transition: var(--transition);
+        }
+
+        .press-item:hover {
+            background: rgba(98, 182, 203, 0.05);
+        }
+
+        .press-item:last-child {
+            border-bottom: none;
+        }
+
+        .press-date {
+            color: var(--accent-teal);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .press-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .press-summary {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Media Contact */
+        .media-contact {
+            text-align: center;
+            padding: 60px 0;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            margin-bottom: 80px;
+        }
+
+        .media-contact h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        /* Newsletter Signup */
+        .newsletter-signup {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .newsletter-signup input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid var(--accent-blue);
+            background: var(--primary-blue);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-signup input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+        }
+
+        /* Responsive Design for News Page */
+        @media (max-width: 992px) {
+            .news-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+            }
+            
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-image {
+                min-height: 250px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .news-hero {
+                height: 40vh;
+                margin-top: 70px;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 200px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .press-section {
+                padding: 30px;
+            }
+            
+            .featured-title {
+                font-size: 1.5rem;
+            }
+            
+            .featured-content {
+                padding: 25px;
+            }
+            
+            .media-contact {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🚀</span>
+                    <p>SpaceLink</p>
+                </a>
+                
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html"  >AboutUs</a></li>
+                    <li><a href="missions.html">Missions</a></li>
+                    <li><a href="research.html">Research</a></li>
+                    <li><a href="satellites.html">Satellites</a></li>
+                    <li><a href="spacecraft.html">Spacecraft</a></li>
+                    <li><a href="news.html">News</a>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="education.html">Education</a></li>
+                    <li><a href="collaborations.html">Collaborations</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                
+                <!-- Overlay for mobile -->
+                <div class="menu-overlay" id="menuOverlay"></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- News Hero Section -->
+    <section class="news-hero">
+        <div class="news-hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>News & Updates</h1>
+                <p>Stay informed with the latest discoveries, mission updates, press releases, and breakthroughs from SpaceLink Research.</p>
+            </div>
+        </div>
+    </section>
+
+    <br><br><br>
+   
+
+    <!-- Main Content -->
+    <main class="research-content">
+        <div class="container">
+            <!-- Featured News -->
+            <section class="featured-news">
+                <h2 class="section-title">Featured Story</h2>
+                <div class="featured-card">
+                    <div class="featured-image">
+                        <img src="https://cdn.pixabay.com/photo/2020/05/27/01/37/space-5225356_1280.jpg" alt="Space Mission">
+                        <div class="news-date">Dec 15, 2024</div>
+                    </div>
+                    <div class="featured-content">
+                        <span class="featured-badge">Exclusive</span>
+                        <h2 class="featured-title">SpaceLink Successfully Tests New Ion Propulsion System</h2>
+                        <p class="featured-excerpt">Our research team has achieved a major breakthrough in propulsion technology, successfully testing an ion drive that is 30% more efficient than current systems. This advancement could significantly reduce travel time to Mars and beyond.</p>
+                        <a href="#" class="btn">Read Full Story</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest News Grid -->
+            <section class="section">
+                <h2 class="section-title">Latest Updates</h2>
+                <div class="news-grid">
+                    <!-- News Item 1 -->
+                    <div class="news-card" data-category="missions">
+                        <div class="news-image">
+                            <img src="https://cdn.pixabay.com/photo/2020/05/26/20/38/moon-5224745_1280.jpg" alt="Moon Mission">
+                            <div class="news-date">Dec 10, 2024</div>
+                            <div class="news-category">Missions</div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">Lunar Rover Successfully Collects Rock Samples</h3>
+                            <p class="news-excerpt">Our autonomous lunar rover has successfully collected and analyzed 15 rock samples from the Moon's south pole, providing new insights into lunar geology.</p>
+                            <div class="news-tags">
+                                <span class="news-tag">Moon</span>
+                                <span class="news-tag">Rover</span>
+                                <span class="news-tag">Exploration</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Read More</a>
+                        </div>
+                    </div>
+
+                  
+
+
+
+                    <!-- News Item 4 -->
+                    <div class="news-card" data-category="partnerships">
+                        <div class="news-image">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/29/12/13/fence-1869401_1280.jpg" alt="Collaboration">
+                            <div class="news-date">Nov 22, 2024</div>
+                            <div class="news-category">Partnerships</div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">SpaceLink Partners with ESA for Mars Mission</h3>
+                            <p class="news-excerpt">New collaboration announced with European Space Agency for joint Mars exploration mission scheduled for 2026.</p>
+                            <div class="news-tags">
+                                <span class="news-tag">ESA</span>
+                                <span class="news-tag">Collaboration</span>
+                                <span class="news-tag">Mars</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- News Item 5 -->
+                    <div class="news-card" data-category="research">
+                        <div class="news-image">
+                            <img src="https://cdn.pixabay.com/photo/2018/08/15/13/10/galaxy-3608029_1280.jpg" alt="Research">
+                            <div class="news-date">Nov 18, 2024</div>
+                            <div class="news-category">Research</div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">Breakthrough in Space Farming Technology</h3>
+                            <p class="news-excerpt">Our research team has developed a new hydroponic system that can grow crops in space with 90% less water than Earth-based systems.</p>
+                            <div class="news-tags">
+                                <span class="news-tag">Agriculture</span>
+                                <span class="news-tag">Sustainability</span>
+                                <span class="news-tag">Innovation</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- News Item 6 -->
+                    <div class="news-card" data-category="events">
+                        <div class="news-image">
+                            <img src="https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_1280.jpg" alt="Conference">
+                            <div class="news-date">Nov 12, 2024</div>
+                            <div class="news-category">Events</div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">International Space Conference 2024 Recap</h3>
+                            <p class="news-excerpt">Highlights from our annual space conference featuring 150+ speakers and groundbreaking research presentations from around the world.</p>
+                            <div class="news-tags">
+                                <span class="news-tag">Conference</span>
+                                <span class="news-tag">Events</span>
+                                <span class="news-tag">Global</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Press Releases -->
+            <section class="section">
+                <h2 class="section-title">Press Releases</h2>
+                <div class="press-section">
+                    <div class="press-list">
+                        <div class="press-item">
+                            <span class="press-date">December 1, 2024</span>
+                            <h3 class="press-title">SpaceLink Announces Q4 Financial Results and Future Investment Plans</h3>
+                            <p class="press-summary">SpaceLink Research reports strong financial performance in Q4 2024, with plans to invest $500M in new research facilities and satellite technology development.</p>
+                            <a href="#" class="btn btn-outline" style="margin-top: 15px;">Download PDF</a>
+                        </div>
+                        
+                        <div class="press-item">
+                            <span class="press-date">November 25, 2024</span>
+                            <h3 class="press-title">New Environmental Monitoring Satellite Network Goes Live</h3>
+                            <p class="press-summary">SpaceLink launches a new network of environmental monitoring satellites providing real-time climate data to governments and research institutions worldwide.</p>
+                            <a href="#" class="btn btn-outline" style="margin-top: 15px;">Download PDF</a>
+                        </div>
+                        
+                        <div class="press-item">
+                            <span class="press-date">November 15, 2024</span>
+                            <h3 class="press-title">SpaceLink Opens New Research Campus in Silicon Valley</h3>
+                            <p class="press-summary">New state-of-the-art research facility opens, focusing on AI-driven space exploration and autonomous spacecraft development.</p>
+                            <a href="#" class="btn btn-outline" style="margin-top: 15px;">Download PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media Contact -->
+            <section class="media-contact">
+                <h3>Media Inquiries</h3>
+                <p class="contact-info">For press inquiries, interviews, or media resources, please contact our media relations team.</p>
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                    <a href="mailto:media@spacelink.org" class="btn">Email Media Team</a>
+                    <a href="#" class="btn btn-outline">Download Press Kit</a>
+                </div>
+            </section>
+
+            <!-- Newsletter Signup -->
+            <section class="section newsletter-signup">
+                <h2 class="section-title">Stay Updated</h2>
+                <p style="max-width: 600px; margin: 0 auto 30px; font-size: 1.1rem; color: var(--text-gray);">Subscribe to our newsletter for the latest news, research updates, and mission announcements delivered to your inbox.</p>
+                <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 10px;">
+                    <input type="email" placeholder="Enter your email address">
+                    <button class="btn">Subscribe</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+   <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SpaceLink Research</h3>
+                    <p>Pioneering space exploration and research for a better future on Earth and beyond.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="missions.html">Missions</a></li>
+                        <li><a href="news.html">News & Updates</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="research.html">R&D</a></li>
+                        <li><a href="satellites.html">Satellites</a></li>
+                        <li><a href="spacecraft.html">Spacecraft</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="collaborations.html">Partnerships</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="gallary.html">  </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SpaceLink Space Research Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        if (hamburger && navLinks && menuOverlay) {
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : 'auto';
+            });
+            
+            // Close menu when clicking on overlay
+            menuOverlay.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                this.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close menu when clicking on a link
+            const navLinksAll = document.querySelectorAll('.nav-links a');
+            navLinksAll.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // News filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const newsCards = document.querySelectorAll('.news-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filterValue = this.getAttribute('data-filter');
+                
+                // Show/hide news cards based on filter
+                newsCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Close menu when window is resized to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                if (hamburger && navLinks && menuOverlay) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
